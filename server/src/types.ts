@@ -8,53 +8,81 @@
 
 // 2. Export the types: 
 // - Export them so routes.ts and storage.ts can import them. 
+// server/src/types.ts
 
-// Create Typescript types/interfaces for the Debug Bundle components
+export type ProviderMeta = {
+  responseId?: string;
+  requestId?: string;
+  model?: string;
+  usage?: unknown;
+  attempts?: number;
+};
+
+export type CallOpenAIArgs = {
+  prompt: string;
+  model: string;
+  temperature: number;
+  maxTokens: number;
+  timeoutMs?: number;
+};
+
+export type CallOpenAIResult = {
+  outputText: string;
+  latencyMs: number;
+  providerMeta: ProviderMeta;
+};
+
+export type CallOpenAIError = {
+  type: "rate_limit" | "timeout" | "provider_error" | "empty_output" | "unknown";
+  message: string;
+  providerStatusCode?: number;
+  providerErrorBody?: unknown;
+  latencyMs: number;
+};
 
 export interface GenerateRequest {
-    prompt: string;
-    model?: string;
-    temperature?: number;
-    maxTokens?: number
-    requestId?: string;
+  prompt: string;
+  model?: string;
+  temperature?: number;
+  maxTokens?: number;
+  requestId?: string;
+}
+
+export interface GenerateResponse {
+  id: string;
+  requestId: string;
+  output: string;
+  latencyMs: number;
+  error?: CallOpenAIError;
 }
 
 export interface BundleEnv {
-    nodeVersion: string;
-    platform: string;
-    hostName: string;
-    serviceVersion: string; 
-}
-
-export interface BundleError {
-    type: string; 
-    message: string;
-    providerStatusCode?: number;
-    providerErrorBody?: any;
+  nodeVersion: string;
+  platform: NodeJS.Platform;
+  hostName: string;
+  serviceVersion: string;
 }
 
 export interface BundleResponse {
-    status: string;
-    outputText: string;
-    latencyMs: number;
-    error?: BundleError;
-    providerMeta?: any;
+  status: "ok" | "error";
+  outputText: string;
+  latencyMs: number;
+  providerMeta?: ProviderMeta;
+  error?: CallOpenAIError;
 }
 
 export interface DebugBundle {
-    id: string;
-    createdAtMs: number;
-    env: BundleEnv;
-    request: GenerateRequest;
-    response: BundleResponse;
+  id: string;
+  createdAtMs: number;
+  env: BundleEnv;
+  request: {
+    prompt: string;
+    model: string;
+    temperature: number;
+    maxTokens: number;
+    requestId: string;
+  };
+  response: BundleResponse;
 }
 
-// Export the types for use in other parts of the application
-export {
-    GenerateRequest,
-    BundleEnv,
-    BundleError,
-    BundleResponse,
-    DebugBundle
-};
 

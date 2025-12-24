@@ -57,7 +57,7 @@ export function initializeDatabase(db: Database.Database) {
 // -- Convert bundle object to JSON string
 // -- Insert row into bundles table
 // --- store `create_at_ms` seperately, AND store full JSON
-import { DebugBundle } from "./types";
+import { DebugBundle } from "./types.js";
 
 export function saveDebugBundle(bundle: DebugBundle) {
     const db = getDBConnection();
@@ -80,7 +80,7 @@ export function getDebugBundle(id: string): DebugBundle | null {
     const selectSQL = `
         SELECT payload_json FROM debug_bundles WHERE id = ?`;
         const stmt = db.prepare(selectSQL);
-        const row = stmt.get(id); 
+        const row = stmt.get(id) as { payload_json: string } | undefined;  
         if (!row) {
             return null;
         } else {
