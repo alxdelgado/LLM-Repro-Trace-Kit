@@ -1,0 +1,17 @@
+# node
+node_modules
+dist
+build
+
+# env (Never commit secrets)
+.env
+.env.*
+!.env.example
+
+# logs / OS
+*.log
+.DS_Store
+
+# swlite (we'll use later)
+*.sqlite
+*.sqlite3

@@ -1,0 +1,26 @@
+{
+  "name": "llm-repro-trace-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alxdelgado/LLM-Repro-Trace-Kit.git"
+  },
+  "keywords": [],
+  "author": "alexdelgado <delgadoalex10@gmail.com>",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/alxdelgado/LLM-Repro-Trace-Kit/issues"
+  },
+  "homepage": "https://github.com/alxdelgado/LLM-Repro-Trace-Kit#readme",
+  "private": "true",
+  "workspaces": [
+    "server",
+    "web"
+  ]
+}
