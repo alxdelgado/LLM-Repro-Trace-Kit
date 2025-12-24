@@ -18,7 +18,7 @@
     "url": "https://github.com/alxdelgado/LLM-Repro-Trace-Kit/issues"
   },
   "homepage": "https://github.com/alxdelgado/LLM-Repro-Trace-Kit#readme",
-  "private": "true",
+  "private": true,
   "workspaces": [
     "server",
     "web"
