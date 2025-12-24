@@ -1,6 +1,21 @@
+// Wire DB init into startup
+// 1. Import initDb from storage.ts
+// 2. Call initDb() once on startup
+// -- right after creating the Fastify app, but before starting to listen
+// 3. If init fails, log error and exit process (so you don't run a broken server)
 import Fastify from "fastify";
 import registerRoutes from "./routes";
+import { getDBConnection } from "./storage.ts"; 
+// Initialize the database connection
+try {
+    getDBConnection();
+    console.log("Database initilized successfully.");
+} catch (error) {
+    console.error("Failed to initialize database:", error);
+    process.exit(1);
+}
 
+// Import dependencies and create Fastify app
 const app = Fastify({ logger: true });
 registerRoutes(app);
 
