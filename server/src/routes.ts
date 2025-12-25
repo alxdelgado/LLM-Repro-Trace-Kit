@@ -42,6 +42,11 @@ import type { DebugBundle, BundleEnv, GenerateRequest, BundleResponse } from "./
 import { callOpenAI } from "./llm_client.js";
 
 export default function registerRoutes(app: FastifyInstance) {
+    // Health check route
+    app.get("/healthz", async (request, reply) => {
+        return reply.send({ status: "ok" });
+    });
+
     // app.get("/debug/:id") 
     app.get("/debug/:id", async (request, reply) => {
         const { id } = request.params as { id: string }; 
