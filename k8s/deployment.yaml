@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llm-repro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llm-repro
+  template:
+    metadata:
+      labels:
+        app: llm-repro
+    spec:
+      containers:
+        - name: llm-repro
+          image: llm-repro-server:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: llm-repro-config
+            - secretRef:
+                name: llm-repro-secret
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
